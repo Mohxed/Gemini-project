@@ -1,44 +1,26 @@
-app
-alembic.ini
-docker-compose.yml
-Dockerfile
-folder_structure.txt
-app\__pycache__
-app\api
-app\core
-app\db
-app\services
-app\main.py
-app\requirements.txt
-app\api\__pycache__
-app\api\v1
-app\api\__init__.py
-app\api\v1\__pycache__
-app\api\v1\__init__.py
-app\api\v1\endpoints.py
-app\api\v1\__pycache__\__init__.cpython-311.pyc
-app\api\v1\__pycache__\endpoints.cpython-311.pyc
-app\api\__pycache__\__init__.cpython-311.pyc
-app\core\__pycache__
-app\core\__init__.py
-app\core\config.py
-app\core\__pycache__\__init__.cpython-311.pyc
-app\core\__pycache__\config.cpython-311.pyc
-app\db\__pycache__
-app\db\migrations
-app\db\base.py
-app\db\models.py
-app\db\migrations\__pycache__
-app\db\migrations\versions
-app\db\migrations\env.py
-app\db\migrations\README
-app\db\migrations\script.py.mako
-app\db\migrations\versions\__pycache__
-app\db\migrations\versions\db2b1c2f7f75_create_users_table.py
-app\db\migrations\versions\__pycache__\db2b1c2f7f75_create_users_table.cpython-311.pyc
-app\db\migrations\__pycache__\env.cpython-311.pyc
-app\db\__pycache__\base.cpython-311.pyc
-app\db\__pycache__\models.cpython-311.pyc
-app\services\__init__.py
-app\services\gemini_service.py
-app\__pycache__\main.cpython-311.pyc
+    app/
+    ├── api/
+    │   ├── v1/
+    │   │   ├── __init__.py
+    │   │   └── endpoints.py # The application Endpoint
+    │   ├── __init__.py
+    ├── core/ # It includes the core configuration
+    │   ├── __init__.py
+    │   └── config.py # The configuration of the app including database url and secrets.
+    ├── db/
+    │   ├── base.py # Defines the SQLAlchemy Base for ORM mapping, essential for model definitions.
+    │   ├── models.py # Contains SQLAlchemy models, such as the User model and others as needed.
+    │   └── migrations/ # This will be done via alembic init app (alembic init db/migrations)
+    │       ├── env.py # Will be autocreated when performing the migration
+    │       ├── README
+    │       ├── script.py.mako # Template used by Alembic for generating new migration files.
+    │       └── versions/  # Holds Alembic migration files for database version control.
+    │           └── db2b1c2f7f75_create_users_table.py
+    ├── services/ # This folder is used for API Encapsulations including the Gemini Service.
+    │   ├── __init__.py
+    │   └── gemini_service.py 
+    ├── main.py # This should include the main app with router to endpoints
+    ├── requirements.txt # The requirements needed
+    alembic.ini # Should include the alembic configuration script_location = app/db/migrations
+    docker-compose.yml # The docker compose configuration file
+    Dockerfile # The backend footprint
