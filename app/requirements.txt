@@ -3,5 +3,10 @@ uvicorn
 psycopg2-binary
 sqlalchemy
 alembic
-dotenv
+python-dotenv
 google-generativeai
+psycopg2
+python-jose[cryptography]
+passlib[bcrypt]
+pydantic
+httpx
