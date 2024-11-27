@@ -1,25 +1,17 @@
-# Use an official Python runtime as a parent image
-FROM python:3.11-slim
+FROM python:3.11-slim AS base
 
-# Set the working directory in the container
 WORKDIR /app
 
-# Install dependencies for psycopg2
-RUN apt-get update && \
-    apt-get install -y libpq-dev gcc && \
-    rm -rf /var/lib/apt/lists/*
+# Install dependencies and cache the apt packages
+RUN apt-get update && apt-get install -y libpq-dev gcc && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Copy the requirements file into the container
+# Separate dependencies into layers for caching
 COPY app/requirements.txt .
-
-# Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the rest of the application code
+# Copy application files
 COPY app /app
 
-# Expose the FastAPI port
 EXPOSE 8000
 
-# Run the FastAPI app
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["python", "app/run.py"]
