@@ -1,6 +1,6 @@
 import google.generativeai as genai
 import os 
-from core.config import settings
+from app.core.config import settings
 
 
 genai.configure(api_key=settings.GEMINI_API_KEY)

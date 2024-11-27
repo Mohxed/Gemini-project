@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from app.db.models import User
 from app.db.base import SessionLocal
-from services.gemini_service import gemini_response
+from app.services.gemini_service import gemini_response
 
 router = APIRouter()
 
