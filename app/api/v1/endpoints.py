@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from app.db.models import User
 from app.db.base import SessionLocal
+from app.services.gemini_service import gemini_response
 from app.utils.auth import create_access_token, verify_access_token
 from pydantic import BaseModel
 
@@ -22,6 +23,9 @@ class UserLogin(BaseModel):
 class UserRegister(BaseModel):
     username: str
     password: str
+
+class GeminiRequest(BaseModel):
+    text: str
 
 # Dependency to fetch the current user from a token
 def get_current_user(token: str = Depends(verify_access_token), db: Session = Depends(get_db)):
@@ -70,3 +74,15 @@ def login(user: UserLogin, db: Session = Depends(get_db)):
 @router.get("/protected/")
 def protected_route(current_user: User = Depends(get_current_user)):
     return {"message": "You have access!", "username": current_user.username}
+
+# Protected Gemini endpoint
+@router.post("/gemini/")
+def call_gemini(request: GeminiRequest, current_user: User = Depends(get_current_user)):
+    try:
+        response = gemini_response(request.text)
+        return {"username": current_user.username, "input": request.text, "gemini_response": response}
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to communicate with Gemini: {str(e)}",
+        )
