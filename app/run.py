@@ -3,8 +3,8 @@ import subprocess
 
 def run_migrations():
     print("Applying database migrations...")
-    result = subprocess.run(["alembic", "upgrade", "head"], check=True)
-    print(result.stdout)
+    # result = subprocess.run(["alembic", "upgrade", "head"], check=True)
+    # print(result.stdout)
 
 def start_app():
     print("Starting the FastAPI app...")
