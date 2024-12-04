@@ -2,10 +2,9 @@ import google.generativeai as genai
 import os 
 from app.core.config import settings
 
-
 genai.configure(api_key=settings.GEMINI_API_KEY)
 
-model = genai.GenerativeModel('gemini-1.5-pro') # Selected a free model
+model = genai.GenerativeModel(model_name = settings.GEMINI_MODEL) # Selected a free model
 
 def gemini_response(text):
     #TODO: Eliminate the markdowns from the text
